@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jess Moore — CV</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C0502E;
+    --bg: #F6F2ED;
+    --text: #1A1A1A;
+    --muted: #8A8178;
+    --card-bg: #FFFCF8;
+    --border: #D9D2C9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.6;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 80px 24px 120px;
+  }
+
+  header {
+    margin-bottom: 72px;
+    position: relative;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -36px;
+    left: 0;
+    width: 48px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 400;
+    font-size: 3.2rem;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .contact {
+    font-size: 0.95rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .section-label {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 28px;
+    font-weight: 400;
+  }
+
+  .roles {
+    margin-bottom: 64px;
+  }
+
+  .role {
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    position: relative;
+  }
+
+  .role:first-child {
+    border-top: 1px solid var(--border);
+  }
+
+  .role-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 20px 0;
+    transition: padding 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  .role:hover .role-header,
+  .role.active .role-header {
+    padding-left: 12px;
+  }
+
+  .role-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    transition: color 0.3s ease;
+  }
+
+  .role:hover .role-title,
+  .role.active .role-title {
+    color: var(--accent);
+  }
+
+  .role-years {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    margin-left: 24px;
+    opacity: 0;
+    transform: translateX(8px);
+    transition: all 0.3s ease;
+  }
+
+  .role:hover .role-years,
+  .role.active .role-years {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .role-detail {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.25, 0.1, 0.25, 1),
+                opacity 0.4s ease;
+    opacity: 0;
+  }
+
+  .role.active .role-detail {
+    max-height: 600px;
+    opacity: 1;
+  }
+
+  .role-detail-inner {
+    padding: 0 0 24px 12px;
+    border-left: 2px solid var(--accent);
+    margin-left: 0;
+    margin-bottom: 4px;
+  }
+
+  .role-company {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+
+  .role-description {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--text);
+    max-width: 520px;
+  }
+
+  .role-description p {
+    margin-bottom: 6px;
+  }
+
+  /* Sub-positions within a grouped role */
+  .sub-position {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .sub-position:first-of-type {
+    margin-top: 12px;
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .sub-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+
+  .sub-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 0.95rem;
+    font-weight: 400;
+  }
+
+  .sub-years {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .sub-company {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 6px;
+  }
+
+  .sub-desc {
+    font-size: 0.85rem;
+    line-height: 1.65;
+    color: var(--text);
+    max-width: 500px;
+  }
+
+  .education-item {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .education-item:first-of-type {
+    border-top: 1px solid var(--border);
+  }
+
+  .edu-degree {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1rem;
+  }
+
+  .edu-school {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .community {
+    margin-bottom: 64px;
+  }
+
+  .community-item {
+    font-size: 0.9rem;
+    padding: 8px 0;
+    color: var(--muted);
+  }
+
+  .community-item span {
+    color: var(--text);
+  }
+
+  .interests {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+    letter-spacing: 0.02em;
+  }
+
+  .interests span {
+    margin: 0 6px;
+    color: var(--accent);
+  }
+
+  .date-sep {
+    margin-left: 12px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 2.2rem; }
+    .page { padding: 48px 20px 80px; }
+    .role-title { font-size: 1.1rem; }
+    .sub-header { flex-direction: column; gap: 2px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>Jess Moore</h1>
+    <div class="contact"><a id="email-link" style="color:inherit;text-decoration:none;cursor:pointer;"></a></div>
+  </header>
+
+  <div class="roles">
+    <div class="section-label">Experience</div>
+
+    <div class="role" onclick="toggle(this)">
+      <div class="role-header">
+        <div class="role-title">Swim Coach</div>
+        <div class="role-years">2025 · Present</div>
+      </div>
+      <div class="role-detail">
+        <div class="role-detail-inner">
+          <div class="role-company">Worthington Swim Club</div>
+          <div class="role-description">
+            <p>Coach age group club swimmers and teach swim lessons.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="role" onclick="toggle(this)">
+      <div class="role-header">
+        <div class="role-title">Graphics Specialist</div>
+        <div class="role-years">2011 · 2022</div>
+      </div>
+      <div class="role-detail">
+        <div class="role-detail-inner">
+          <div class="role-company">American Chemical Society</div>
+          <div class="role-description">
+            <p>Designed cover graphics for 70+ international chemistry journals, collaborating directly with scientists worldwide. Managed a large-scale digital asset library spanning thousands of images and issues.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="role" onclick="toggle(this)">
+      <div class="role-header">
+        <div class="role-title">Farm Market Associate</div>
+        <div class="role-years">2012 · Present</div>
+      </div>
+      <div class="role-detail">
+        <div class="role-detail-inner">
+          <div class="sub-position">
+            <div class="sub-header">
+              <div class="sub-title">Market Vendor</div>
+              <div class="sub-years">2012 · Present</div>
+            </div>
+            <div class="sub-company">Tilley Farmstead</div>
+            <div class="sub-desc">Selling heirloom vegetables at local farmers markets. Long-running role spanning over a decade of direct-to-consumer sales.</div>
+          </div>
+
+          <div class="sub-position">
+            <div class="sub-header">
+              <div class="sub-title">Sales Associate</div>
+              <div class="sub-years">2024 · 2025</div>
+            </div>
+            <div class="sub-company">City Folks Farm Shop</div>
+            <div class="sub-desc">Helped run a small urban farm store selling local produce, goods, and prepared foods.</div>
+          </div>
+
+          <div class="sub-position">
+            <div class="sub-header">
+              <div class="sub-title">Sales Associate</div>
+              <div class="sub-years">2023 · 2024</div>
+            </div>
+            <div class="sub-company">Beechwold Farm Market</div>
+            <div class="sub-desc">Helped operate a neighborhood farm market selling local produce and specialty goods.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="role" onclick="toggle(this)">
+      <div class="role-header">
+        <div class="role-title">Public Relations Consultant</div>
+        <div class="role-years">2011 · 2014</div>
+      </div>
+      <div class="role-detail">
+        <div class="role-detail-inner">
+          <div class="role-company">Strider Sports International</div>
+          <div class="role-description">
+            <p>Wrote and distributed press releases. Managed website and social media presence for the balance bike brand.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="role" onclick="toggle(this)">
+      <div class="role-header">
+        <div class="role-title">Director of Communications</div>
+        <div class="role-years">2009 · 2011</div>
+      </div>
+      <div class="role-detail">
+        <div class="role-detail-inner">
+          <div class="role-company">National Bicycle League</div>
+          <div class="role-description">
+            <p>Managed print and online communications for the national BMX sanctioning body. Secured and serviced sponsorships. Promoted and organized large sporting events.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="role" onclick="toggle(this)">
+      <div class="role-header">
+        <div class="role-title">Editor & Art Director</div>
+        <div class="role-years">2005 · 2011</div>
+      </div>
+      <div class="role-detail">
+        <div class="role-detail-inner">
+          <div class="role-company">BMX Today Magazine</div>
+          <div class="role-description">
+            <p>Published monthly magazine for nonprofit sanctioning body. Solicited and managed advertising. Created content for print and web. Designed marketing materials.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="roles">
+    <div class="section-label">Education</div>
+    <div class="education-item">
+      <div class="edu-degree">BA Design</div>
+      <div class="edu-school">University of Notre Dame <span class="date-sep">2000 · 2004</span></div>
+    </div>
+  </div>
+
+  <div class="community">
+    <div class="section-label">Worthington · OH</div>
+    <div class="community-item"><span>Farmers Market Advisory Board</span> <span class="date-sep">2013 · 2017</span></div>
+    <div class="community-item"><span>Resource Pantry Board of Directors</span> <span class="date-sep">2014 · 2016</span></div>
+    <div class="community-item"><span>High School Ultimate Frisbee Coach</span> <span class="date-sep">2010 · 2012</span></div>
+  </div>
+
+  <div class="interests">
+    capital markets <span>·</span> permaculture <span>·</span> cooking
+  </div>
+
+  <div style="text-align:right;margin-top:48px;">
+    <a href="/Jess_Moore_CV.pdf" style="font-size:0.7rem;color:#D9D2C9;text-decoration:none;font-style:italic;letter-spacing:0.02em;transition:color 0.3s;" onmouseover="this.style.color='#C0502E'" onmouseout="this.style.color='#D9D2C9'">pdf</a>
+  </div>
+</div>
+
+<script>
+(function(){var u='jess';var d='moore.lol';var e=document.getElementById('email-link');e.href='mai'+'lto:'+u+'@'+d;e.textContent='jess at moore dot lol';})();
+function toggle(el) {
+  var wasActive = el.classList.contains('active');
+  var all = document.querySelectorAll('.role.active');
+  for (var i = 0; i < all.length; i++) { all[i].classList.remove('active'); }
+  if (!wasActive) el.classList.add('active');
+}
+</script>
+</body>
+</html>
